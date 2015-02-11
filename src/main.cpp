@@ -19,7 +19,6 @@
 #include "gif.h"
 #include "gif_graphic_block.h"
 #include "gif_color_table.h"
-#include "gif_lzw_decoder.h"
 #include "gif_application_extension.h"
 #include "gif_graphic_control_extension.h"
 #include "gif_plain_text_extension.h"
@@ -45,35 +44,28 @@ void sig_handler(int p_sig)
 
 int main(int argc,char ** argv)
 {
-#ifndef _WIN32
-  //Preparing signal handling to manage stop
-  // Struct for signal manager
-  struct sigaction l_signal_action;
-  
-  l_signal_action.sa_handler=sig_handler;
-  // Reset flags
-  l_signal_action.sa_flags=0;
-  // No bblock of specific signals
-  sigemptyset(&l_signal_action.sa_mask);
-  
-  // Setting up manager
-  sigaction(SIGINT,&l_signal_action,0);
-#else
-  signal(SIGINT,sig_handler);
-#endif
+
 
   try
     {
       // Defining application command line parameters
-      parameter_manager::parameter_manager l_param_manager("test_lib_gif.exe","--",1);
-      parameter_manager::parameter_if l_file_name("file_name",false);
-      l_param_manager.add(l_file_name);
+      parameter_manager::parameter_manager l_param_manager("gif_player.exe","--",1);
+      parameter_manager::parameter_if l_file_name_parameter("file_name",false);
+      l_param_manager.add(l_file_name_parameter);
   
       // Treating parameters
       l_param_manager.treat_parameters(argc,argv);
 
-      lib_gif::gif l_gif(l_file_name.get_value<std::string>());
+      std::string l_file_name = l_file_name_parameter.get_value<std::string>();
+      std::ifstream l_file;
+      l_file.open(l_file_name.c_str(),std::ifstream::binary);
+      if(!l_file) throw quicky_exception::quicky_runtime_exception("Unable to read file \""+l_file_name+"\"",__LINE__,__FILE__);
+     
+
+      lib_gif::gif l_gif(l_file);
       
+      l_file.close();
+
       simple_gui l_gui;
       unsigned int l_gif_width = l_gif.get_width();
       unsigned int l_gif_height = l_gif.get_height();
@@ -98,16 +90,39 @@ int main(int argc,char ** argv)
       int l_loop_counter = 0;
       const lib_gif::gif_graphic_control_extension * l_control_extension = nullptr;
 
+      bool l_ctrl_c_handler = false;
       do
 	{
-	  for(unsigned int l_index = 0 ; l_index < l_gif.get_nb_data_block() ; ++l_index)
+	  for(unsigned int l_index = 0 ; l_index < l_gif.get_nb_data_block() && !g_stop; ++l_index)
 	    {
 	      const lib_gif::gif_data_block & l_data_block = l_gif.get_data_block(l_index);
 	      switch(l_data_block.get_type())
 		{
-		  case lib_gif::gif_data_block::t_gif_data_block_type::GRAPHICAL_CONTROL_EXTENSION :
-		    l_control_extension = static_cast<const lib_gif::gif_graphic_control_extension*>(&l_data_block);
-		    break;
+                case lib_gif::gif_data_block::t_gif_data_block_type::GRAPHICAL_CONTROL_EXTENSION :
+                  l_control_extension = static_cast<const lib_gif::gif_graphic_control_extension*>(&l_data_block);
+                  if(!l_ctrl_c_handler)
+                    {
+                      std::cout << "Create CTRL+C handler" << std::endl ;
+                      l_ctrl_c_handler = true;
+#ifndef _WIN32
+                      //Preparing signal handling to manage stop
+                      // Struct for signal manager
+                      struct sigaction l_signal_action;
+                                
+                      l_signal_action.sa_handler=sig_handler;
+                      // Reset flags
+                      l_signal_action.sa_flags=0;
+                      // No bblock of specific signals
+                      sigemptyset(&l_signal_action.sa_mask);
+                            
+                      // Setting up manager
+                      sigaction(SIGINT,&l_signal_action,0);
+#else
+                      signal(SIGINT,sig_handler);
+#endif
+                    }
+
+                  break;
 		case lib_gif::gif_data_block::t_gif_data_block_type::COMMENT_EXTENSION :
 		  break;
 		case lib_gif::gif_data_block::t_gif_data_block_type::APPLICATION_EXTENSION :
@@ -184,6 +199,7 @@ int main(int argc,char ** argv)
 		      }
 		    if(l_control_extension)
                       {
+
                         if(l_control_extension->get_delay_time())
                           {
                             unsigned int l_delay = 10000 * l_control_extension->get_delay_time();
