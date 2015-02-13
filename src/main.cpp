@@ -124,6 +124,7 @@ int main(int argc,char ** argv)
 
                   break;
 		case lib_gif::gif_data_block::t_gif_data_block_type::COMMENT_EXTENSION :
+                  std::cout << l_data_block;
 		  break;
 		case lib_gif::gif_data_block::t_gif_data_block_type::APPLICATION_EXTENSION :
 		  {
