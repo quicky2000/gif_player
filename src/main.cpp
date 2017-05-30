@@ -66,10 +66,10 @@ int main(int argc,char ** argv)
       
       l_file.close();
 
-      simple_gui l_gui;
+      simple_gui::simple_gui l_gui;
       unsigned int l_gif_width = l_gif.get_width();
       unsigned int l_gif_height = l_gif.get_height();
-      l_gui.createWindow(l_gif_width,l_gif_height);
+      l_gui.create_window(l_gif_width,l_gif_height);
 
 
       lib_gif::gif_color_table const *l_color_table = nullptr;
@@ -77,12 +77,12 @@ int main(int argc,char ** argv)
         {
           l_color_table = & l_gif.get_global_color_table();
           lib_gif::gif_color l_color = (*l_color_table)[l_gif.get_background_index()];
-          uint32_t l_sdl_color = l_gui.getColorCode(l_color.get_red(),l_color.get_green(),l_color.get_blue());
+          uint32_t l_sdl_color = l_gui.get_color_code(l_color.get_red(),l_color.get_green(),l_color.get_blue());
           for(unsigned int l_y = 0 ; l_y < l_gif_height ; ++l_y)
             {
               for(unsigned int l_x = 0 ; l_x < l_gif_width ; ++l_x)
                 {
-                  l_gui.setPixel(l_x,l_y,l_sdl_color);
+                  l_gui.set_pixel(l_x,l_y,l_sdl_color);
                 }
             }
         }
@@ -190,8 +190,8 @@ int main(int argc,char ** argv)
 				if(!l_control_extension || !l_control_extension->get_transparent_color_flag() || l_control_extension->get_transparent_color_index() != l_image.get_color_index(l_x,l_y))
 				  {
 				    lib_gif::gif_color l_color = (*l_color_table)[l_image.get_color_index(l_x,l_computed_y)];
-				    uint32_t l_sdl_color = l_gui.getColorCode(l_color.get_red(),l_color.get_green(),l_color.get_blue());
-				    l_gui.setPixel(l_left_position + l_x,l_top_position + l_y,l_sdl_color);
+				    uint32_t l_sdl_color = l_gui.get_color_code(l_color.get_red(),l_color.get_green(),l_color.get_blue());
+				    l_gui.set_pixel(l_left_position + l_x,l_top_position + l_y,l_sdl_color);
 				  }
 			      }
 			  }
@@ -240,7 +240,7 @@ int main(int argc,char ** argv)
                               {
                                 l_color_table = & l_gif.get_global_color_table();
                                 lib_gif::gif_color l_color = (*l_color_table)[l_gif.get_background_index()];
-                                uint32_t l_sdl_color = l_gui.getColorCode(l_color.get_red(),l_color.get_green(),l_color.get_blue());
+                                uint32_t l_sdl_color = l_gui.get_color_code(l_color.get_red(),l_color.get_green(),l_color.get_blue());
                                 l_gui.set_rectangle(l_left_position,l_top_position,l_width,l_height,l_sdl_color);
                               }
                             break;
