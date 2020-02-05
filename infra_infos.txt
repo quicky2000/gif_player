@@ -3,4 +3,5 @@ depend: parameter_manager lib_gif simple_gui
 MAIN_CFLAGS:-Wall -g -ansi -pedantic -std=c++11 -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -O0 -DNDEBUG
 CFLAGS:
 LDFLAGS:
+MAIN_LDFLAGS:
 env_variables:
