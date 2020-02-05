@@ -1,7 +1,7 @@
 Gif_player
 ==========
 
-SDL2 based software displaying aniamted GIFs
+SDL2 based software displaying animated GIFs
 
 Continuous integration with [Travis-Ci](https://travis-ci.org/quicky2000/gif_player) : ![Build Status](https://travis-ci.org/quicky2000/gif_player.svg?branch=master)
 
