@@ -104,27 +104,19 @@ int main(int argc,char ** argv)
 #ifndef _WIN32
                             //Preparing signal handling to manage stop
                             // Struct for signal manager
-                            struct sigaction l_signal_action = {{nullptr}
-                                                               , {0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 , 0
-                                                                 }
-                                                               , 0
-                                                               , nullptr
-                                                               };
+                            struct sigaction l_signal_action =
+#ifndef __APPLE__
+                            {{nullptr}
+                            , {0}
+                            , 0
+                            , nullptr
+                            };
+#else // __APPLE__
+                            {{nullptr}
+                            , 0
+                            , {0}
+                            };
+#endif // __APPLE__
                                 
                             l_signal_action.sa_handler = sig_handler;
                             // Reset flags
