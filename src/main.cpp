@@ -126,7 +126,7 @@ int main(int argc,char ** argv)
 		  break;
 		case lib_gif::gif_data_block::t_gif_data_block_type::APPLICATION_EXTENSION :
 		  {
-		    const lib_gif::gif_application_extension * l_application_extension = dynamic_cast<const lib_gif::gif_application_extension*>(&l_data_block);
+		    const auto l_application_extension = dynamic_cast<const lib_gif::gif_application_extension*>(&l_data_block);
 		    if(l_application_extension->is_supported() && !l_loop_counter)
 		      {
 			l_loop_counter = l_application_extension->get_loop_counter();
