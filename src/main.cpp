@@ -21,12 +21,10 @@
 #include "gif_color_table.h"
 #include "gif_application_extension.h"
 #include "gif_graphic_control_extension.h"
-#include "gif_plain_text_extension.h"
 #include "simple_gui.h"
 #include <unistd.h>
 #include <iostream>
 #include <sys/time.h>
-#include <sys/types.h>
 
 #include <signal.h>
 #ifdef _WIN32
