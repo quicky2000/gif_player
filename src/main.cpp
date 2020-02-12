@@ -97,7 +97,7 @@ int main(int argc,char ** argv)
 	      switch(l_data_block.get_type())
 		{
                 case lib_gif::gif_data_block::t_gif_data_block_type::GRAPHICAL_CONTROL_EXTENSION :
-                  l_control_extension = static_cast<const lib_gif::gif_graphic_control_extension*>(&l_data_block);
+                  l_control_extension = dynamic_cast<const lib_gif::gif_graphic_control_extension*>(&l_data_block);
                   if(!l_ctrl_c_handler)
                     {
                       std::cout << "Create CTRL+C handler" << std::endl ;
@@ -126,7 +126,7 @@ int main(int argc,char ** argv)
 		  break;
 		case lib_gif::gif_data_block::t_gif_data_block_type::APPLICATION_EXTENSION :
 		  {
-		    const lib_gif::gif_application_extension * l_application_extension = static_cast<const lib_gif::gif_application_extension*>(&l_data_block);
+		    const lib_gif::gif_application_extension * l_application_extension = dynamic_cast<const lib_gif::gif_application_extension*>(&l_data_block);
 		    if(l_application_extension->is_supported() && !l_loop_counter)
 		      {
 			l_loop_counter = l_application_extension->get_loop_counter();
@@ -139,7 +139,7 @@ int main(int argc,char ** argv)
 		  break;
 		case lib_gif::gif_data_block::t_gif_data_block_type::GRAPHIC_BLOCK:
 		  {
-		    const lib_gif::gif_graphic_block & l_graphic_block = * static_cast<const lib_gif::gif_graphic_block*>(&l_data_block);
+		    const lib_gif::gif_graphic_block & l_graphic_block = * dynamic_cast<const lib_gif::gif_graphic_block*>(&l_data_block);
 		    const unsigned int l_left_position = l_graphic_block.get_left_position();
 		    const unsigned int l_top_position = l_graphic_block.get_top_position();
 		    const unsigned int l_width = l_graphic_block.get_width();
