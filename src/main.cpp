@@ -34,7 +34,7 @@
 bool g_stop = false;
 
 //------------------------------------------------------------------------------
-void sig_handler(int p_sig)
+void sig_handler(int)
 {
   std::cout << "===================> Receive Control-C : execution will stop" << std::endl ;
   g_stop = true;
