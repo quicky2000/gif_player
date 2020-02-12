@@ -129,7 +129,7 @@ int main(int argc,char ** argv)
 		    const auto l_application_extension = dynamic_cast<const lib_gif::gif_application_extension*>(&l_data_block);
 		    if(l_application_extension->is_supported() && !l_loop_counter)
 		      {
-			l_loop_counter = l_application_extension->get_loop_counter();
+			l_loop_counter = (int)l_application_extension->get_loop_counter();
 			if(!l_loop_counter)
 			  {
 			    l_loop_counter = -1;
