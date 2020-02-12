@@ -24,9 +24,9 @@
 #include "simple_gui.h"
 #include <unistd.h>
 #include <iostream>
-#include <sys/time.h>
+#include <ctime>
 
-#include <signal.h>
+#include <csignal>
 #ifdef _WIN32
 #include <windows.h>
 #endif
