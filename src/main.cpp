@@ -162,7 +162,10 @@ int main(int argc,char ** argv)
 			l_gif_height_stream << l_gif_height;
 			l_error = "Max y coordinate "+l_max_y_stream.str()+" is greater than height "+l_gif_height_stream.str();
 		      }
-		    if("" != l_error) throw quicky_exception::quicky_logic_exception(l_error,__LINE__,__FILE__);
+		    if(!l_error.empty())
+            {
+		        throw quicky_exception::quicky_logic_exception(l_error,__LINE__,__FILE__);
+            }
 
 		    void *l_saved_rectangle = nullptr;
 		    if(l_control_extension && 3 == l_control_extension->get_disposal_method())
