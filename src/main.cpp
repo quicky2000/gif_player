@@ -105,7 +105,8 @@ int main(int argc,char ** argv)
 #ifndef _WIN32
                       //Preparing signal handling to manage stop
                       // Struct for signal manager
-                      struct sigaction l_signal_action;
+                      struct sigaction l_signal_action = {{nullptr}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0,  0, 0}, 0,
+                                                          nullptr};
                                 
                       l_signal_action.sa_handler=sig_handler;
                       // Reset flags
@@ -208,7 +209,7 @@ int main(int argc,char ** argv)
                             if(l_control_extension->get_user_input_flag())
                               {
                                 fd_set l_read_fd_set;
-                                struct timeval l_timeval;
+                                struct timeval l_timeval = {0,0};
                                 int l_ret_val = 0;
                                 /* Watch stdin (fd 0) to see when it has input. */
                                 FD_ZERO(&l_read_fd_set);
