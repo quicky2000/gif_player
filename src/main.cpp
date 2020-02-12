@@ -114,7 +114,7 @@ int main(int argc,char ** argv)
                       sigemptyset(&l_signal_action.sa_mask);
                             
                       // Setting up manager
-                      sigaction(SIGINT,&l_signal_action,0);
+                      sigaction(SIGINT,&l_signal_action, nullptr);
 #else
                       signal(SIGINT,sig_handler);
 #endif
@@ -215,7 +215,7 @@ int main(int argc,char ** argv)
                                 l_timeval.tv_sec = 0;
                                 l_timeval.tv_usec = l_delay;
 
-                                l_ret_val = select(1, &l_read_fd_set, NULL, NULL, &l_timeval);
+                                l_ret_val = select(1, &l_read_fd_set, nullptr, nullptr, &l_timeval);
 
                                 if (l_ret_val == -1)
                                   {
