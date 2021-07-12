@@ -3,7 +3,7 @@ Gif_player
 
 SDL2 based software displaying animated GIFs
 
-Continuous integration with [Travis-Ci](https://travis-ci.org/quicky2000/gif_player) : ![Build Status](https://travis-ci.org/quicky2000/gif_player.svg?branch=master)
+Continuous integration with [Travis-Ci](https://travis-ci.com/quicky2000/gif_player) : ![Build Status](https://travis-ci.com/quicky2000/gif_player.svg?branch=master)
 
 License
 -------
@@ -13,7 +13,7 @@ Build
 -----
 
 Build process is the same used in [Travis file](.travis.yml)
-Reference build can be found [here](https://travis-ci.org/quicky2000/gif_player)
+Reference build can be found [here](https://travis-ci.com/quicky2000/gif_player)
 
 ```
 sudo apt-get update
